@@ -1,0 +1,16 @@
+<inkscape-extension>
+  <_name>Fill Custom Text!</_name>
+  <id>org.lotb.filter.fill_custom_text</id>
+  <dependency type="executable" location="extensions">fill_custom_text.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="filename" type="string" _gui-text="Insert the file path!"></param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+       <submenu _name="Examples"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">fill_custom_text.py</command>
+  </script>
+</inkscape-extension>
