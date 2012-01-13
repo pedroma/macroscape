@@ -10,7 +10,7 @@ import inkex,csv
 # The simplestyle module provides functions for style parsing.
 from simplestyle import formatStyle
 
-class HelloWorldEffect(inkex.Effect):
+class FillCustomTextEffect(inkex.Effect):
     """
     Example Inkscape effect extension.
     Creates a new layer with a "Hello World!" text centered in the middle of the document.
@@ -41,7 +41,12 @@ class HelloWorldEffect(inkex.Effect):
             handler = csv.reader(open(data_file,'r'))
 
             for line in handler:
-                id,txt = line
+                id = line[0]
+                txt = line[1]
+                try:
+                    styles = eval(line[2])
+                except:
+                    styles = None
 
                 # Create text element
                 text = inkex.etree.Element(inkex.addNS('text','svg'))
@@ -61,6 +66,8 @@ class HelloWorldEffect(inkex.Effect):
 
                 # Center text horizontally with CSS style.
                 style = {'text-align' : 'center', 'text-anchor': 'middle'}
+                if styles is not None:
+                    style.update(styles)
                 text.set('style', formatStyle(style))
 
                 # Connect elements together.
@@ -69,5 +76,5 @@ class HelloWorldEffect(inkex.Effect):
             inkex.errormsg("Unkown error")
 
 # Create effect instance and apply it.
-effect = HelloWorldEffect()
+effect = FillCustomTextEffect()
 effect.affect()
