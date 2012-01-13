@@ -40,11 +40,16 @@ class FillCustomTextEffect(inkex.Effect):
         try:
             handler = csv.reader(open(data_file,'r'))
 
+            i = 1
             for line in handler:
                 id = line[0]
                 txt = line[1]
                 try:
-                    styles = eval(line[2])
+                    styles = line[2]
+                    try:
+                        styles = eval(line[2])
+                    except:
+                        inkex.errormsg("Styles syntax in line "+i+". Ignoring styles.")
                 except:
                     styles = None
 
@@ -72,6 +77,7 @@ class FillCustomTextEffect(inkex.Effect):
 
                 # Connect elements together.
                 self.document.getroot().append(text)
+                i = i + 1
         except:
             inkex.errormsg("Unkown error")
 
